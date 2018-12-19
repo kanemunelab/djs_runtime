@@ -110,7 +110,7 @@ var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
 return (deli===this['undef']);
 })['なら']()['実行'](dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
-dtlbind(this,function(){
+return dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
 return (this['dt']['読む']((1)))['含む?']("\t");
 })['なら']()['そうでなければ'](dtlbind(this,function(){
@@ -120,7 +120,6 @@ return deli="\t";
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
 return deli=",";
 }));
-return this['ラベル']['作る']((deli))['位置']((0),(0));
 }));
 dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
@@ -468,7 +467,7 @@ var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
 return (deli===(this['undef']));
 })['なら']()['実行'](dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
-return deli="  ";
+return deli="\t";
 }));
 this['tf']['全部書く']((this['配列']['作る']()),(encode));
 this['フィールド名']['それぞれ実行'](dtlbind(this,function(n,i){
@@ -5103,7 +5102,7 @@ return this['ペン']['ペンなし']()['位置']((((this['_円原点x']+((((thi
 }));
 this['ペン']['ペンなし']()['位置'](((this['_円原点x']+this['x_pos'])),((this['_円原点y']+this['y_pos'])))['ペンあり']()['角形']((10),(4))['図形を作る']((this['col']));
 this['A']=this['ラベル']['作る']((this['D_f1']['データ']['読む']((j))))['位置']((((this['_円原点x']+this['x_pos'])+(15))),(((this['_円原点y']+this['y_pos'])+(10))))['文字サイズ']((this['_軸ラベルサイズ']));
-this['ラベル']['作る'](((("  "+(this['d_arr']['読む']((j))))+"件")))['位置'](((((this['_円原点x']+this['x_pos'])+(15))+(this['A']['幅?']()))),(((this['_円原点y']+this['y_pos'])+(10))))['文字サイズ']((this['_軸ラベルサイズ']));
+this['ラベル']['作る'](((("　"+(this['d_arr']['読む']((j))))+"件")))['位置'](((((this['_円原点x']+this['x_pos'])+(15))+(this['A']['幅?']()))),(((this['_円原点y']+this['y_pos'])+(10))))['文字サイズ']((this['_軸ラベルサイズ']));
 this['y_pos']=(this['y_pos']+(20));
 this['sum_length']=(((((this['D_f1']['データ']['読む']((j)))+""))['長さ?']())+(((("    "+(this['d_arr']['読む']((j))))+"件"))['長さ?']()));
 return dtlbind(this,function(){
@@ -5754,7 +5753,6 @@ return this['undef'];
             」そうでなければ「
                 deli=","。
             」実行。
-            ラベル!(deli) 作る　0 0 位置。
         」実行。
         「自分:フィールド名==undef」！なら「
             fld_tmp＝（dt！1  読む）！(deli)  分割。
@@ -5889,12 +5887,10 @@ return this['undef'];
         「横幅<=3」なら「補正値=3*横幅」そうでなければ
         「横幅<7」なら「補正値=2*横幅」そうでなければ
         「補正値=横幅」実行。
-        //JAVA*8 JS*7
         「(23+(幅+要素数)*7+補正値) <= (リスト幅)」!なら「リスト幅=(23+(幅+要素数)*7+補正値)」実行。
         lst=テキストエリア！(カラム名)    作る  (リスト幅)  (リスト高さ)  大きさ  (テーブル：x)  (テーブル：y)  位置。
         テーブル：x=(テーブル：x)+(40+リスト幅)。
     」そうでなければ「
-    　//JAVA*8 JS*7
     　「(23+(幅+要素数)*7) <= (リスト幅)」!なら「リスト幅=(23+(幅+要素数)*7)」実行。
         lst=テキストエリア！(カラム名)    作る  (リスト幅)  (リスト高さ)  大きさ  (テーブル：x)  (テーブル：y)  位置。
         テーブル：x=(テーブル：x)+(40+リスト幅)。
@@ -5927,7 +5923,7 @@ return this['undef'];
     tf＝テキストファイル！（fn）  作る。
     「encode==(undef)」!なら「encode="Shift-JIS"」実行。
     tmp=""。
-    「deli==(undef)」！なら「deli="  "」実行。
+    「deli==(undef)」！なら「deli="\t"」実行。
     tf！（配列！作る）(encode)  全部書く。
     フィールド名!「|n  i|
         tmp=(tmp)!(n+deli)    連結。
@@ -6569,10 +6565,9 @@ return this['undef'];
 テーブル：最頻値＝「|  ;freq_arr  _max_rec  args  arg_num _max|
     args=自分!(_rest)  getarg。
     「自分!(args)  "common1"  check_arg」!なら「
-        f1=args!1    読む。
+        f1=args!1　読む。
         freq_arr=自分！(f1)  度数。
         _max=freq_arr!"度数"  最大値  数にする。
-        
         _max_rec=freq_arr！(_max)  2  レコード取り出し。
         ret=テーブル！((f1)+"_最頻値")  "度数"  作る。
         _max_rec：データ！「|  val  cnt  |
@@ -8470,7 +8465,7 @@ return this['undef'];
                 ペン！ペンなし  (自分:_円原点x+x_pos)  (自分:_円原点y+y_pos)  位置  ペンあり  10  4  角形  (col)  図形を作る。
                 A=ラベル!  (D_f1:データ！  (j)  読む)  作る  (自分:_円原点x+x_pos+15)  (自分:_円原点y+y_pos+10)  位置  (自分：_軸ラベルサイズ)    文字サイズ。
                 
-                ラベル!  ("  "+(d_arr！  (j)  読む)+"件")  作る  (自分:_円原点x+x_pos+15+(A!幅？))  (自分:_円原点y+y_pos+10)  位置    (自分：_軸ラベルサイズ)  文字サイズ。
+                ラベル!  ("　"+(d_arr！  (j)  読む)+"件")  作る  (自分:_円原点x+x_pos+15+(A!幅？))  (自分:_円原点y+y_pos+10)  位置    (自分：_軸ラベルサイズ)  文字サイズ。
                 y_pos  =  y_pos  +  20。
                 sum_length=(((D_f1:データ！  (j)  読む)+"")!    長さ？)  +  (("    "+(d_arr！  (j)  読む)+"件")  !長さ?)。
                 「_max_length<sum_length」!なら「_max_length=sum_length」実行。
@@ -8884,5 +8879,8 @@ return this['undef'];
         」実行。
     」実行。
 」．
+
+
+
 
 */
