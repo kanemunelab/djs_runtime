@@ -1091,7 +1091,16 @@ this['データ']['それぞれ実行'](dtlbind(this,function(r,i){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,2);
 this['番号']=(((i-(1)))%(this['フィールド名']['要素数?']()));
 this['f']=this['フィールド名']['読む'](((this['番号']+(1))));
-this['s']=((((((""+this['f'])+"＝")+((34)).コード文字())+r)+((34)).コード文字())+"。");
+dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return ((r+""))['含む?']("[^0-9０-９\-\.]");
+})['なら']()['そうでなければ'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return this['s']=((((((""+this['f'])+"＝")+((34)).コード文字())+r)+((34)).コード文字())+"。");
+}))['実行'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return this['s']=((((""+this['f'])+"＝")+r)+"。");
+}));
 dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
 return ((this['s']['含む?']("<"))===this['false']);
@@ -6162,7 +6171,12 @@ return this['undef'];
     自分:データ！「｜r  i｜
         番号=(i-1)%(フィールド名！要素数？)。
         f＝フィールド名！（番号+1）読む。
-        s＝""+f+"＝"+コード文字(0x22)+r+コード文字(0x22)+"。"。
+        「(r+"")!"[^0-9０-９\-\.]"    含む?」!なら「
+            s＝""+f+"＝"+コード文字(0x22)+r+コード文字(0x22)+"。"。
+        」そうでなければ「
+            s＝""+f+"＝"+r+"。"。
+        」実行。
+        
         「(s!"<"　含む?)==false」！なら「
         　（s）！実行。
         」実行。
@@ -8879,8 +8893,6 @@ return this['undef'];
         」実行。
     」実行。
 」．
-
-
 
 
 */
