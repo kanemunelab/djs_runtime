@@ -451,44 +451,172 @@ return レコード="";
 this['テーブル']['フラグ']=(1);
 return this;
 });
-this['テーブル']['ファイル出力']=dtlbind(this,function(fn,deli,encode){
-var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,3);
-this['tf']=this['テキストファイル']['作る']((fn));
-dtlbind(this,function(){
+this['テーブル']['TSV表示']=dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
-return (encode===(this['undef']));
-})['なら']()['実行'](dtlbind(this,function(){
-var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
-return encode="Shift-JIS";
-}));
-this['tmp']="";
-dtlbind(this,function(){
-var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
-return (deli===(this['undef']));
-})['なら']()['実行'](dtlbind(this,function(){
-var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
-return deli="\t";
-}));
-this['tf']['全部書く']((this['配列']['作る']()),(encode));
+var 要素数;
+var 文字列;
+var レコード;
+var カラム名;
+var tmp;
+var space;
+var s;
+var 幅;
+var 文字数;
+var lst;
+var 件数;
+要素数=this['フィールド名']['要素数?']();
+文字数=this['配列']['作る']();
+レコード="";
+カラム名="";
 this['フィールド名']['それぞれ実行'](dtlbind(this,function(n,i){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,2);
-return this['tmp']=(this['tmp'])['連結'](((n+deli)));
+return 文字数['書く']((this['文字数カウント']((n))));
 }));
-this['tf']['書く']((this['tmp']),(encode));
-this['tmp']="";
-this['データ']['それぞれ実行'](dtlbind(this,function(n,i){
+this['フィールド名']['それぞれ実行'](dtlbind(this,function(n,i){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,2);
-this['tmp']=(this['tmp'])['連結'](((n+deli)));
 return dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
-return ((i%(this['フィールド名']['要素数?']()))===(0));
+return (i===要素数);
+})['なら']()['そうでなければ'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return カラム名=カラム名['連結']((n));
+}))['実行'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return カラム名=カラム名['連結'](((n+"\t")));
+}));
+}));
+this['データ']['それぞれ実行'](dtlbind(this,function(n,i){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,2);
+tmp=this['文字数カウント'](((n+"")));
+return dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return ((文字数['読む']((((((i-(1)))%要素数)+(1)))))<tmp);
 })['なら']()['実行'](dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
-this['tf']['書く']((this['tmp']),(encode));
-return this['tmp']="";
+return 文字数['上書き']((((((i-(1)))%要素数)+(1))),(tmp));
 }));
 }));
-this['ラベル']['作る']("書き出し完了");
+幅=(0);
+文字数['それぞれ実行'](dtlbind(this,function(n){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,1);
+return 幅=(幅+n);
+}));
+件数=((this['データ']['要素数?']())/(this['フィールド名']['要素数?']()));
+this['リスト幅']=(this['テーブル']['_画面幅']/(2.5));
+dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return ((((23)+(((幅+要素数))*(7))))<=(this['リスト幅']));
+})['なら']()['実行'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return this['リスト幅']=(((23)+(((幅+要素数))*(7))));
+}));
+lst=this['テキストエリア']['作る']((カラム名))['大きさ']((this['リスト幅']),(this['リスト高さ']))['位置']((this['テーブル']['x']),(this['テーブル']['y']));
+this['テーブル']['x']=((this['テーブル']['x'])+(((40)+this['リスト幅'])));
+this['データ']['それぞれ実行'](dtlbind(this,function(n,i){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,2);
+dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return ((i%要素数)===(0));
+})['なら']()['そうでなければ'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return レコード=レコード['連結']((n));
+}))['実行'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return レコード=レコード['連結'](((n+"\t")));
+}));
+return dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return (((((i-(1)))%要素数)===(要素数-(1))));
+})['なら']()['実行'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+lst['書く']((レコード))['改行']();
+return レコード="";
+}));
+}));
+return this;
+});
+this['テーブル']['CSV表示']=dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+var 要素数;
+var 文字列;
+var レコード;
+var カラム名;
+var tmp;
+var space;
+var s;
+var 幅;
+var 文字数;
+var lst;
+var 件数;
+要素数=this['フィールド名']['要素数?']();
+文字数=this['配列']['作る']();
+レコード="";
+カラム名="";
+this['フィールド名']['それぞれ実行'](dtlbind(this,function(n,i){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,2);
+return 文字数['書く']((this['文字数カウント']((n))));
+}));
+this['フィールド名']['それぞれ実行'](dtlbind(this,function(n,i){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,2);
+return dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return (i===要素数);
+})['なら']()['そうでなければ'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return カラム名=カラム名['連結']((n));
+}))['実行'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return カラム名=カラム名['連結'](((n+",")));
+}));
+}));
+this['データ']['それぞれ実行'](dtlbind(this,function(n,i){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,2);
+tmp=this['文字数カウント'](((n+"")));
+return dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return ((文字数['読む']((((((i-(1)))%要素数)+(1)))))<tmp);
+})['なら']()['実行'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return 文字数['上書き']((((((i-(1)))%要素数)+(1))),(tmp));
+}));
+}));
+幅=(0);
+文字数['それぞれ実行'](dtlbind(this,function(n){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,1);
+return 幅=(幅+n);
+}));
+件数=((this['データ']['要素数?']())/(this['フィールド名']['要素数?']()));
+this['リスト幅']=(this['テーブル']['_画面幅']/(2.5));
+dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return ((((23)+(((幅+要素数))*(7))))<=(this['リスト幅']));
+})['なら']()['実行'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return this['リスト幅']=(((23)+(((幅+要素数))*(7))));
+}));
+lst=this['テキストエリア']['作る']((カラム名))['大きさ']((this['リスト幅']),(this['リスト高さ']))['位置']((this['テーブル']['x']),(this['テーブル']['y']));
+this['テーブル']['x']=((this['テーブル']['x'])+(((40)+this['リスト幅'])));
+this['データ']['それぞれ実行'](dtlbind(this,function(n,i){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,2);
+dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return ((i%要素数)===(0));
+})['なら']()['そうでなければ'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return レコード=レコード['連結']((n));
+}))['実行'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return レコード=レコード['連結'](((n+",")));
+}));
+return dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return (((((i-(1)))%要素数)===(要素数-(1))));
+})['なら']()['実行'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+lst['書く']((レコード))['改行']();
+return レコード="";
+}));
+}));
 return this;
 });
 this['テーブル']['配列から作る']=dtlbind(this,function(){
@@ -5928,22 +6056,114 @@ return this['undef'];
     自分。
 」。
 
-テーブル：ファイル出力＝「｜fn  deli  encode｜
-    tf＝テキストファイル！（fn）  作る。
-    「encode==(undef)」!なら「encode="Shift-JIS"」実行。
-    tmp=""。
-    「deli==(undef)」！なら「deli="\t"」実行。
-    tf！（配列！作る）(encode)  全部書く。
-    フィールド名!「|n  i|
-        tmp=(tmp)!(n+deli)    連結。
+// テーブル：ファイル出力＝「｜fn  deli  encode｜
+//     tf＝テキストファイル！（fn）  作る。
+//     「encode==(undef)」!なら「encode="Shift-JIS"」実行。
+//     tmp=""。
+//     「deli==(undef)」！なら「deli="\t"」実行。
+//     tf！（配列！作る）(encode)  全部書く。
+//     フィールド名!「|n  i|
+//         tmp=(tmp)!(n+deli)    連結。
+//     」それぞれ実行。
+//     tf!(tmp)  (encode)    書く。
+//     tmp=""。
+//     自分:データ！「|n  i|
+//         tmp=(tmp)!(n+deli)    連結。
+//         「i%(フィールド名!要素数?)==0」!なら「  tf!(tmp)  (encode)  書く。tmp=""。」実行。
+//     」それぞれ実行。
+//     ラベル！"書き出し完了"  作る。
+//     自分。
+// 」。
+
+テーブル：TSV表示＝「|  ;要素数  文字列  レコード  カラム名  tmp  space  s  幅  文字数  lst  件数  |
+    要素数=自分：フィールド名！要素数？。
+    文字数＝配列！作る。
+    レコード=""。
+    カラム名＝""。
+    フィールド名！「|n  i|
+        文字数！(自分！(n)  文字数カウント)    書く。
     」それぞれ実行。
-    tf!(tmp)  (encode)    書く。
-    tmp=""。
+    
+    フィールド名！「|n  i|
+        「i==要素数」!なら「
+            カラム名=カラム名！(n)    連結。
+        」そうでなければ「
+            カラム名=カラム名!(n+"\t")  連結。
+        」実行。
+    」それぞれ実行。
+    
+
     自分:データ！「|n  i|
-        tmp=(tmp)!(n+deli)    連結。
-        「i%(フィールド名!要素数?)==0」!なら「  tf!(tmp)  (encode)  書く。tmp=""。」実行。
+        tmp=自分！(n+"")  文字数カウント。
+        「(文字数！((i-1)%要素数+1)  読む)  <  tmp」!なら「
+            文字数！((i-1)%要素数+1)    (tmp)  上書き。
+        」実行。
     」それぞれ実行。
-    ラベル！"書き出し完了"  作る。
+
+    幅=0。
+    文字数！「|n|  幅＝幅+n。」それぞれ実行。
+    件数=(自分:データ！要素数？)/(フィールド名!要素数?)。
+    リスト幅=テーブル:_画面幅/2.5。
+    「(23+(幅+要素数)*7) <= (リスト幅)」!なら「リスト幅=(23+(幅+要素数)*7)」実行。
+    lst=テキストエリア！(カラム名)    作る  (リスト幅)  (リスト高さ)  大きさ  (テーブル：x)  (テーブル：y)  位置。
+    テーブル：x=(テーブル：x)+(40+リスト幅)。
+    自分:データ！「|n  i|
+        「i%要素数==0」!なら「
+            レコード＝レコード！(n)    連結。            
+        」そうでなければ「
+            レコード＝レコード！(n+"\t")    連結。
+        」実行。
+        「((i-1)%要素数==要素数-1)」!なら「
+            lst!(レコード)  書く    改行。
+            レコード=""。
+        」実行。
+    」それぞれ実行。
+    自分。
+」。
+
+テーブル：CSV表示＝「|  ;要素数  文字列  レコード  カラム名  tmp  space  s  幅  文字数  lst  件数  |
+    要素数=自分：フィールド名！要素数？。
+    文字数＝配列！作る。
+    レコード=""。
+    カラム名＝""。
+    フィールド名！「|n  i|
+        文字数！(自分！(n)  文字数カウント)    書く。
+    」それぞれ実行。
+    
+    フィールド名！「|n  i|
+        「i==要素数」!なら「
+            カラム名=カラム名！(n)    連結。
+        」そうでなければ「
+            カラム名=カラム名!(n+",")  連結。
+        」実行。
+    」それぞれ実行。
+    
+
+    自分:データ！「|n  i|
+        tmp=自分！(n+"")  文字数カウント。
+        「(文字数！((i-1)%要素数+1)  読む)  <  tmp」!なら「
+            文字数！((i-1)%要素数+1)    (tmp)  上書き。
+        」実行。
+    」それぞれ実行。
+
+    幅=0。
+    文字数！「|n|  幅＝幅+n。」それぞれ実行。
+    件数=(自分:データ！要素数？)/(フィールド名!要素数?)。
+    リスト幅=テーブル:_画面幅/2.5。
+    「(23+(幅+要素数)*7) <= (リスト幅)」!なら「リスト幅=(23+(幅+要素数)*7)」実行。
+    lst=テキストエリア！(カラム名)    作る  (リスト幅)  (リスト高さ)  大きさ  (テーブル：x)  (テーブル：y)  位置。
+    テーブル：x=(テーブル：x)+(40+リスト幅)。
+    自分:データ！「|n  i|
+        「i%要素数==0」!なら「
+            レコード＝レコード！(n)    連結。            
+        」そうでなければ「
+            レコード＝レコード！(n+",")    連結。
+        」実行。
+        「((i-1)%要素数==要素数-1)」!なら「
+            lst!(レコード)  書く    改行。
+            レコード=""。
+        」実行。
+    」それぞれ実行。
     自分。
 」。
 
