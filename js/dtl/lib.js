@@ -764,6 +764,50 @@ root.module=root.create().extend({
     root[f].prototype.__name__=f+":prototype";
 });
 root.Block=root.Function;
+
+root.emptyObj=function(){return {};};
+root["空オブジェクト"]=root.emptyObj;
+root.system.capture=function(x,y,w,h){
+  root["Actor"]["resize"]();
+  var svg=$("#turtle_svg");
+  var bodyj=$("body");
+  var w_ = parseFloat(bodyj.css("width"));
+  var h_ = parseFloat(svg.css("height"));
+  // console.log(w_);
+  // console.log($("body").css("height"));
+  if(x !==undefined && y !==undefined && w !==undefined && h !==undefined){
+    x=parseFloat(x);
+    y=parseFloat(y);
+    w = parseFloat(w);
+    h = parseFloat(h);
+    x=w_/2+x;
+    y=h_/2-y;
+    width=x+w;
+    height=y+h;
+  }else{
+    // console.log("x");
+    x=0 , y=0;
+    w = parseFloat(svg.attr("width"));
+    h = parseFloat(svg.attr("height"));
+  }
+
+  setTimeout(function(){
+    var filename=root.system.inputFileName("保存する画像のファイル名を入力してください。",".png");
+    if(filename=="cansel")return;
+    svg2image(filename,x,y,w,h);
+  }.bind(this),1000);
+};
+root.system.inputFileName=function(text,ext){
+  var filename="ファイル名"+ext;
+  filename=prompt(text,filename);
+  if(filename == "" || filename == null){
+    alert("キャンセルしました。");
+    return "cansel";
+  }
+  if(filename.match(/\.[a-zA-Z0-9]+$/) == null) filename+= ext;
+  return filename;
+};
+
 root.wait=function (f) {
     if (!DtlPromise.available()) return this;
     if (typeof f==="number") {
@@ -856,3 +900,71 @@ DtlPromise=root.DtlPromise={
     }*/
 };
 })();
+
+function labels2svg(){
+  var txt_g=$(document.createElementNS("http://www.w3.org/2000/svg","g"));
+  wndj=$(window);
+  wndw=wndj.width();
+  wndh=wndj.height();
+  txt_g.attr("font-family","mono").attr("id","txt_g");
+  txt_g.attr("transform","translate("+wndw/2+","+wndh/2+")");
+  txt_g.appendTo($("#turtle_svg"));
+
+  labels=$("#UI_div").find("span");
+  svged_labels=[];
+  labels.map(function(k,e){
+    var ej=$(e);
+    if(ej.css("display")=="none")return;
+    svged_labels.push(ej);
+    // ej.hide();
+    var text=ej.text();
+    var left=ej.css("left");
+    var top=ej.css("top");
+    var font_size=ej.css("font-size");
+    font_size=parseFloat(font_size)-1+"px";
+    top=3+parseFloat(top)+parseFloat(font_size)+"px";
+
+    var svg_txt=$(document.createElementNS("http://www.w3.org/2000/svg","text"));
+    svg_txt.html(text).attr("x",left).attr("y",top).attr("font-size");
+    svg_txt.appendTo(txt_g);
+  });
+}
+function svgedLabels2labels(){
+  $("#txt_g").remove();
+  svged_labels.map(function(e){e.show();});
+}
+
+function svg2image(filename,x,y,width,height){
+  labels2svg();
+  var svg=$("#turtle_svg");
+
+  var width_ = parseFloat(svg.attr("width"));
+  var height_ = parseFloat(svg.attr("height"));
+  $("body").append("<canvas id='canvas1' class='hidden' width="  + width + " height=" + height +"></canvas>")
+  var bclr=svg.css("background-color");
+  svg.css("background-color","white");
+
+  var canvas = $("#canvas1")[0]
+  var ctx = canvas.getContext("2d")
+
+  svg.attr("viewBox", x + " " + y + " " + width + " " + height)
+
+  var data = new XMLSerializer().serializeToString(svg[0])
+  var imgsrc = "data:image/svg+xml;charset=utf-8;base64,"
+                         + btoa(unescape(encodeURIComponent(data)))
+  var image = new Image()
+  image.onload = function(){
+      ctx.drawImage(image, -x, -y);
+      $("body").append("<a id='image-file' class='hidden' type='application/octet-stream' href='"
+                         + canvas.toDataURL("image/png") + "' download="+filename+">Donload Image</a>")
+      $("#image-file")[0].click()
+
+      $("#canvas1").remove()
+      $("#image-file").remove()
+      svg.attr("viewBox","0 0 "+width_+" "+height_);
+      svgedLabels2labels();
+  }
+  image.src = imgsrc;
+  svg.css("background-color",bclr);
+}
+
