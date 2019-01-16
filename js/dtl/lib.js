@@ -768,7 +768,6 @@ root.Block=root.Function;
 root.emptyObj=function(){return {};};
 root["空オブジェクト"]=root.emptyObj;
 root.system.capture=function(x,y,w,h){
-  root["Actor"]["resize"]();
   var svg=$("#turtle_svg");
   var bodyj=$("body");
   var w_ = parseFloat(bodyj.css("width"));
@@ -921,11 +920,10 @@ function labels2svg(){
     var left=ej.css("left");
     var top=ej.css("top");
     var font_size=ej.css("font-size");
-    font_size=parseFloat(font_size)-1+"px";
-    top=3+parseFloat(top)+parseFloat(font_size)+"px";
+    top=2+parseFloat(top)+parseFloat(font_size)+"px";
 
     var svg_txt=$(document.createElementNS("http://www.w3.org/2000/svg","text"));
-    svg_txt.html(text).attr("x",left).attr("y",top).attr("font-size");
+    svg_txt.html(text).attr("x",left).attr("y",top).attr("font-size",font_size);
     svg_txt.appendTo(txt_g);
   });
 }
