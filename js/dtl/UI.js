@@ -13,6 +13,53 @@ return this['$']['create']("body")['css']("background-color",((c+"")));
 });
 this['addAlias']("Screen","Panel");
 this['UI']=this['create']();
+this['UI']['valueOf']=dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+var ret;
+var halfval;
+ret=dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return this['element']['text'];
+})['then']()['execute'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return this['element']['text']();
+}));
+})['or'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return this['element']['val'];
+})['then']()['execute'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return this['element']['val']();
+}));
+}),dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return this['element']['innerHTML'];
+})['then']()['execute'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return this['element']['innerHTML']();
+}));
+}));
+halfval=((""+ret))['replace']((root['window']['RegExp']("[０-９．]","g")),dtlbind(this,function(tmpStr){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,1);
+return root['window']['String']['fromCharCode']((((tmpStr['charCodeAt']((0)))-(65248))));
+}));
+return dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return root['window']['parseFloat']((halfval));
+})['then']()['else'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return root['window']['parseFloat']((halfval));
+}))['execute'](dtlbind(this,function(){
+var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
+return ret;
+}));
+});
 this['UI']['setTrans']=dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
 var str;
@@ -875,6 +922,17 @@ Screen:paint=[|c|
 ! "Screen" "Panel" addAlias.
 
 UI=! create.
+UI:valueOf=[|;ret halfval|
+    ret=[[element:text]!then[element!text]execute.]
+        ![[element:val]!then[element!val]execute]
+        [[element:innerHTML]!then[element!innerHTML]execute]or.
+    halfval=(""+ret)!(:window!"[０-９．]""g"RegExp)[|tmpStr|
+        :window:String!((tmpStr!0 charCodeAt)-65248)fromCharCode
+    ]replace.
+    [:window!(halfval)parseFloat]!then[
+        :window!(halfval)parseFloat
+    ]else[ret]execute.
+].
 UI:setTrans=[|;str|
     str="postion:absolute;left:"+(pos:x)+";top:"+(pos:y)+";".
     element ! "transform" (str) attr
