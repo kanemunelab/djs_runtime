@@ -68,7 +68,7 @@ return this['arr'];
 ].
 テキストファイル：fromServer=[|filename|
     opt=system![]new.
-    opt:url="http://jsdolittle.eplang.jp/djs/".
+    opt:url="./data/".
     「filename!"^data/"含む？」！そうでなければ「
         opt:url=opt:url+"data/"．
     」実行．

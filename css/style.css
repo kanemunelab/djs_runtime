@@ -1,7 +1,6 @@
 @font-face{
   font-family: ‘mono’;
 	src: url(../fonts/NotoSansMonoCJKjp-Regular.woff);
-	/* src: url(http://bitarrow.eplang.jp/bitarrow/runtime/lib/dtl/NotoSansMonoCJKjp-Regular.woff); */
   format(‘woff’);
 }
 textarea{
