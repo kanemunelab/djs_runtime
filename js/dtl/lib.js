@@ -1,5 +1,4 @@
 (function (){
-$(window).on('touchmove.noScroll',function(e){e.preventDefault();});
 var root={window:window,document:document, console:console};
 window.root=root;
 root.root=root;
@@ -615,18 +614,16 @@ root.system.handleError=function (e){
     else throw e;
 };
 root.system.run2=function (res) {
-    var a=DtlPromise.hasABG();
-    if (a && a.isGenerator(res)) {
-        return a.run(res);
+    if (AsyncByGenerator.isGenerator(res)) {
+        return AsyncByGenerator.run(res);
     }
     return res;
 };
 root.system.run=function (func) {
     try {
         var res=func.apply(root,[]);
-        var a=DtlPromise.hasABG();
-        if (a && a.isGenerator(res)) {
-            res=a.run(res);
+        if (AsyncByGenerator.isGenerator(res)) {
+            res=AsyncByGenerator.run(res);
             return res.catch(root.system.handleError);
         }
     } catch (e) {
@@ -806,7 +803,6 @@ root.system.inputFileName=function(text,ext){
   if(filename.match(/\.[a-zA-Z0-9]+$/) == null) filename+= ext;
   return filename;
 };
-
 root.wait=function (f) {
     if (!DtlPromise.available()) return this;
     if (typeof f==="number") {
@@ -836,21 +832,13 @@ DtlPromise=root.DtlPromise={
             });
         }
     },
-    hasABG: function () {
-        return typeof AsyncByGenerator!=="undefined" && AsyncByGenerator;
-    },
-    isGenerator: function (g) {
-        var a=this.hasABG();
-        return a && a.isGenerator(g);
-    },
     isPromise: function (p) {
-        var a=this.hasABG();
-        return a && a.isPromise(p);
+        return AsyncByGenerator.isPromise(p);
     },
     available: function () {
-        var a=this.hasABG();
-        return a && a.supportsGenerator;
+        return AsyncByGenerator.supportsGenerator;
     }
+
     /*IS: "IS_DTL_PROMISE",
     // promisify
     wait: function (obj,f) {// f:promise or func
