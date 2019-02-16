@@ -171,6 +171,7 @@ this['addAliasFromTable']("actor","歩く","あるく","forward");
 this['addAliasFromTable']("actor","戻る","もどる","back,backward");
 this['addAliasFromTable']("actor","跳ね返る,はね返る","はねかえる","bounce,bound");
 this['addAliasFromTable']("actor","moveCenter","中心に戻る");
+this['addAliasFromTable']("Actor","hitTarget","相手");
 this['addAliasFromTable']("turtle","歩く","あるく","forward");
 this['addAliasFromTable']("turtle","戻る","もどる","back,backward");
 this['addAliasFromTable']("turtle,figure","右回り,右回転,右に回る","みぎまわり,みぎかいてん,みぎにまわる","rightturn");
@@ -621,6 +622,7 @@ return this['addAliasFromTable']("leapmotion","パー?","ぱー?","paper?");
     ! "actor" "戻る" "もどる" "back,backward" addAliasFromTable.
     ! "actor" "跳ね返る,はね返る" "はねかえる" "bounce,bound" addAliasFromTable.
     ! "actor" "moveCenter" "中心に戻る" addAliasFromTable.
+    ! "Actor" "hitTarget" "相手" addAliasFromTable.
     
     //----autogen from DolittleAliases(EXCEPT substr)
     ! "turtle" "歩く" "あるく" "forward" addAliasFromTable.
@@ -812,6 +814,4 @@ return this['addAliasFromTable']("leapmotion","パー?","ぱー?","paper?");
     //---------
 ] execute.
 //! showAliasState.
-
-
 */

@@ -113,8 +113,8 @@ var svgh;
 this['svg']=this['$']['create']("svg");
 this['console']['log']("SVG",(this['svg']));
 wndj=this['$']['create']((this['window']));
-svgw=((wndj['width']()));
-svgh=((wndj['height']()));
+svgw=(wndj['width']());
+svgh=(wndj['height']());
 dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
 return (svgh<=(0));
@@ -140,8 +140,8 @@ return this['svg_g']=this['createSVGElem']("g")['attr']("transform",((((("transl
 t=this;
 wndj['resize'](dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
-svgw=((wndj['width']()));
-svgh=((wndj['height']()));
+svgw=(wndj['width']());
+svgh=(wndj['height']());
 dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
 return (svgh<=(0));
@@ -254,6 +254,7 @@ root['collision']=dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
 return });
 root['collision']['isEventHandler']=this['true'];
+this['Actor']['hitTarget']=this['undef'];
 this['Actor']['checkCrash']=dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
 var t;
@@ -267,8 +268,10 @@ var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
 this['Actor']['_doingCheckCrash']=(1);
 this['allCrash']()['each'](dtlbind(this,function(a){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,1);
+this['hitTarget']=a;
 this['collision']((a));
-return a['collision']((this));
+a['collision']((this));
+return this['hitTarget']=this['undef'];
 }));
 return this['Actor']['_doingCheckCrash']=(0);
 }));
@@ -512,13 +515,15 @@ Actor ! "getDir" "direction?" addAlias.
 //Actor ! "collision" addEventType.// ★
 :collision=[].
 :collision:isEventHandler=true.
-
+Actor:hitTarget=undef.
 Actor:checkCrash=[|;t|
     [Actor:_doingCheckCrash] ! then [] else [
         Actor:_doingCheckCrash=1.//TODO:true
         !allCrash [|a|
+            self:hitTarget=a.
             ! (a) collision.
             a ! (this) collision.
+            self:hitTarget=undef.
         ] each. //TODO: localize
         Actor:_doingCheckCrash=0.
     ] execute.
@@ -554,5 +559,4 @@ Actor:bounce＝[| _hitTarget; lp ld stp a |
 ].
 Actor:xpos?=[pos:x].
 Actor:ypos?=[pos:y].
-
 */
