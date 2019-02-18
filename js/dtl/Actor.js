@@ -270,7 +270,9 @@ this['allCrash']()['each'](dtlbind(this,function(a){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,1);
 this['hitTarget']=a;
 this['collision']((a));
+a['hitTarget']=this;
 a['collision']((this));
+a['hitTarget']=this['undef'];
 return this['hitTarget']=this['undef'];
 }));
 return this['Actor']['_doingCheckCrash']=(0);
@@ -522,7 +524,9 @@ Actor:checkCrash=[|;t|
         !allCrash [|a|
             self:hitTarget=a.
             ! (a) collision.
+            a:hitTarget=self.
             a ! (this) collision.
+            a:hitTarget=undef.
             self:hitTarget=undef.
         ] each. //TODO: localize
         Actor:_doingCheckCrash=0.
