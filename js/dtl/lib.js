@@ -608,9 +608,51 @@ Function.prototype.while=function(){
 };
 Function.prototype.then=function(){return (this.execute(this,arguments))?root._true:root._false;};
 Function.prototype.else=function(){return (this.execute(this,arguments))?root._false:root._true;};
+
+root.system.error2japanese=function(en){
+		var type;
+		var ja;
+
+		if(en.match(/undefined/)){
+			var str = en.split("\n")[0];
+			var target = str.replace(/TypeError: /,"");
+			target = target.replace(/Cannot read property /,"");
+			target = target.replace(/ of undefined/,"");
+			target = target.replace(/"/g,"");
+			target = target.replace(/'/g,"");
+
+			ja = "「 "　+ target + " 」が参照できません。\n「 "　+ target + " 」を、または参照元のオブジェクトが正しいか確認してください。";
+		}else if(en.match(/is not a function/)){
+			var str = en.split("\n")[0];
+			var target = str.replace(/TypeError: /,"");
+			target = target.replace(/ is not a function/,"");
+			target = target.replace(/"/g,"");
+			target = target.replace(/'/g,"");
+
+			ja = "「 " + target + " 」が関数として定義されていません。\nまたは関数でない「 " + target + " 」を関数として呼び出そうとしました。";
+
+		  if(target.match(/\./)){
+				var target0 = target.split("\.");
+				var target1 = target.replace(/this\./,"");
+				target1 = target1.replace(/\./g,"、");
+				var target2 = target0[target0.length-1];
+
+				ja = "「 " +　target1 + " 」が定義されていません。\nまたは関数でない「 " + target2 + " 」を関数として呼び出そうとしました。";
+			}
+		}else{
+			ja = en;
+		}
+
+		return ja;
+}
+
 root.system.handleError=function (e){
     console.error(e);
-    if (typeof onerror==="function") onerror(e.message,"unknown",1,1,e);
+		var japanese_error=root.system.error2japanese(e.message);
+    if (typeof onerror==="function") {
+			onerror(japanese_error,"unknown",1,1,e);
+			// onerror(e.message,"unknown",1,1,e);
+		}
     else throw e;
 };
 root.system.run2=function (res) {
