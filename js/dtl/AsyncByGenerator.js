@@ -81,6 +81,14 @@
             } else if (this.isGenerator(v)) {
                 return v;
             }
+						if(root.system._inMain){
+							if((new Date())-root.system._start>5000){
+								if(confirm('実行に時間がかかってています。\n実行をストップしますか？')){
+									throw new Error('実行をストップしました。');
+								}
+								root.system._start=new Date();
+							}
+						}
             return (function*(){return v;})();
             ---*/
         }),
@@ -88,6 +96,7 @@
             /*---
             var n=gen.next();
             if (n.done) return n.value;
+						console.log('fuga');
             return (function*() {
                 while(true) {
                     yield n.value;

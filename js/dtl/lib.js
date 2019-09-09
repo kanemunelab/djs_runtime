@@ -621,11 +621,14 @@ root.system.run2=function (res) {
 };
 root.system.run=function (func) {
     try {
+				root.system._inMain=true;
+				root.system._start=new Date();
         var res=func.apply(root,[]);
         if (AsyncByGenerator.isGenerator(res)) {
             res=AsyncByGenerator.run(res);
             return res.catch(root.system.handleError);
         }
+				root.system._inMain=false;
     } catch (e) {
         root.system.handleError(e);
     }
