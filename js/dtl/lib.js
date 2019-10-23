@@ -449,6 +449,19 @@ Object.defineProperty(Array.prototype,"min",{
 		return min;
 	}
 });
+Object.defineProperty(Array.prototype,"order_contain?",{
+	enumerable:false,configurable:true,
+	value:function(){
+		var b=Array.prototype.slice.call(arguments);
+		var a=this;
+		var num_b=0;
+		for(var i=0;i<a.length;i++){
+			if(a[i]==b[num_b])num_b++;
+			if(b.length<=num_b)return true;
+		}
+		return false;
+	}
+})
 //root["配列"]=Array;
 root.Array=Array;
 
@@ -684,6 +697,114 @@ Function.prototype.try=function(){
 	}
 	return res;
 };
+
+function dtladd(l,r){
+	if(typeof l=='object'){
+		if(l.add)return l.add(r);
+		else return l+r;
+	} else return l+r;
+}
+window.dtladd=root.dtladd=dtladd;
+function dtlsub(l,r){
+	if(typeof l=='object'){
+		if(l.sub)return l.sub(r);
+		else return l-r;
+	} else return l-r;
+}
+window.dtlsub=root.dtlsub=dtlsub;
+function dtlmul(l,r){
+	if(typeof l=='object'){
+		if(l.mul)return l.mul(r);
+		else return l*r;
+	} else return l*r;
+}
+window.dtlmul=root.dtlmul=dtlmul;
+function dtldiv(l,r){
+	if(typeof l=='object'){
+		if(l.div)return l.div(r);
+		else return l/r;
+	} else return l/r;
+}
+window.dtldiv=root.dtldiv=dtldiv;
+function dtlmod(l,r){
+	if(typeof l=='object'){
+		if(l.mod)return l.mod(r);
+		else return l%r;
+	} else return l%r;
+}
+window.dtlmod=root.dtlmod=dtlmod;
+function dtlgt(l,r){
+	if(typeof l=='object'){
+		if(l.gt)return l.gt(r);
+		else return l>r;
+	} else return l>r;
+}
+window.dtlgt=root.dtlgt=dtlgt;
+function dtlge(l,r){
+	if(typeof l=='object'){
+		if(l.ge)return l.ge(r);
+		else return l>=r;
+	} else return l>=r;
+}
+window.dtlge=root.dtlge=dtlge;
+function dtllt(l,r){
+	if(typeof l=='object'){
+		if(l.lt)return l.lt(r);
+		else return l<r;
+	} else return l<r;
+}
+window.dtllt=root.dtllt=dtllt;
+function dtlle(l,r){
+	if(typeof l=='object'){
+		if(l.le)return l.le(r);
+		else return l<=r;
+	} else return l<=r;
+}
+window.dtlle=root.dtlle=dtlle;
+function dtleq(l,r){
+	if(typeof l=='object'){
+		if(l.eq)return l.eq(r);
+		else return l===r;
+	} else return l===r;
+}
+window.dtleq=root.dtleq=dtleq;
+function dtlne(l,r){
+	if(typeof l=='object'){
+		if(l.ne)return l.ne(r);
+		else return l!==r;
+	} else return l!==r;
+}
+window.dtlne=root.dtlne=dtlne;
+function dtlwrap(o){
+	if(Array.isArray(o))return o;
+	switch(typeof o){
+		case 'object': return o; break;
+		case 'string': return string.create(o); break;
+		case 'number': 
+		case 'boolean':
+		case 'function': {
+			return {
+				valueOf:function(){return f;},
+				isDtlWrapping:true
+			};
+			break;
+		}
+		default: alert(typeof o);break;
+	}
+}
+function dtlunwrap(o){
+	if(Array.isArray(o))return o;
+	switch(typeof o){
+		case 'object':{
+			if(o.isDtlWrapping)return o.valueOf();
+			else return o;
+			break;
+		}
+		default:return o;break;
+	}
+}
+window.dtlwrap=root.dtlwrap=dtlwrap;
+window.dtlunwrap=root.dtlunwrap=dtlunwrap;
 var _jsroot; (function () {_jsroot=this;})();
 function dtlbind(bound, f) {
     f.bound=bound;
