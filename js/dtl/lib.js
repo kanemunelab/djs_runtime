@@ -240,9 +240,8 @@ root.or=or;
 
 root.system=root.create().extend({
 	localize: localize,
-  use:function(filename){
-    $("<script src=\"/dtl/"+filename+".dtl.js\"></script>").appendTo("head");
-  },
+	setupper:{},
+	use:name=>new Promise((res,rej)=>root.system.setupper[name].execute(res,rej)),
 	new:function(obj){
     var args=Array.prototype.slice.call(arguments);
     obj=args.shift();
