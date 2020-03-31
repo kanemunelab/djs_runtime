@@ -485,7 +485,7 @@ var t;
 t=this;
 return this['element']['click'](dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
-return t['action']();
+return t['action']['execute']();
 }));
 });
 this['Button']['initialize']=dtlbind(this,function(label,key){
@@ -515,7 +515,7 @@ var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
 return (k['keyCode']===(root['Button']['keyCodeDict']['read']((((key+""))['toUpperCase']()))));
 })['then']()['execute'](dtlbind(this,function(){
 var self=this;var 自分=self;var _rest=Array.prototype.slice.call(arguments,0);
-return t['action']();
+return t['action']['execute']();
 }));
 }),(root['true']));
 }));
@@ -1170,7 +1170,7 @@ Button=UI ! create.
 Button:action=[].
 //Button ! "action" addEventType.
 Button:left=0.
-Button:attachEvent=[|;t| t=this. element ! [t ! action] click].
+Button:attachEvent=[|;t| t=this. element ! [t:action!execute] click].
 Button:initialize=[|label key;t|
     t=this.
     [label==undef]!then [label=! read] execute.
@@ -1185,7 +1185,7 @@ Button:initialize=[|label key;t|
     [key]!then[
         :window![:window:document!"keydown"[|k|
                 [k:keyCode==(:Button:keyCodeDict!
-                ((key+"")!toUpperCase)read)]!then[t!action]execute.
+                ((key+"")!toUpperCase)read)]!then[t:action!execute]execute.
         ](:true)addEventListener.]$.
     ]execute.
     // 以上
