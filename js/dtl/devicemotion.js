@@ -39,7 +39,10 @@ var Calibratable={
     }
 };
 
+root.sensorNotWorkingCalled=false;
 root.sensorNotWorking=function(){
+		if(root.sensorNotWorkingCalled)return;
+		root.sensorNotWorkingCalled=true;
     if(typeof DeviceOrientationEvent.requestPermission!=="function"){
         alert("お使いの端末はセンサ情報を取得できないようです。");
         return;
